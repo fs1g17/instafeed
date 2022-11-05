@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {InstaGrid} from '../../components';
 
+export type MediaType = "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+
 export interface InstaItem {
   permalink: string;
   mediaUrl: string;
+  mediaType: MediaType;
   thumbnailUrl?: string;
 }
 
@@ -17,14 +20,15 @@ const InstaFeed = () => {
 
   useEffect(() => {
     const fetchMedia = async (id: string) => {
-      const mediaUrl = `https://graph.instagram.com/${id}?access_token=${accessToken}&fields=media_url,permalink,thumbnail_url`;
+      const mediaUrl = `https://graph.instagram.com/${id}?access_token=${accessToken}&fields=media_url,permalink,thumbnail_url,media_type`;
 
       const res = await fetch(mediaUrl);
       const json = (await res.json());
 
       const instaItem: InstaItem = {
         permalink: json.permalink,
-        mediaUrl: json.media_url
+        mediaUrl: json.media_url,
+        mediaType: json.media_type
       };
 
       if(!!json.thumbnail_url) {
