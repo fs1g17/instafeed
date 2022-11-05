@@ -4,6 +4,7 @@ import {InstaGrid} from '../../components';
 export interface InstaItem {
   permalink: string;
   mediaUrl: string;
+  thumbnailUrl?: string;
 }
 
 const InstaFeed = () => {
@@ -16,7 +17,7 @@ const InstaFeed = () => {
 
   useEffect(() => {
     const fetchMedia = async (id: string) => {
-      const mediaUrl = `https://graph.instagram.com/${id}?access_token=${accessToken}&fields=media_url,permalink`;
+      const mediaUrl = `https://graph.instagram.com/${id}?access_token=${accessToken}&fields=media_url,permalink,thumbnail_url`;
 
       const res = await fetch(mediaUrl);
       const json = (await res.json());
@@ -25,6 +26,10 @@ const InstaFeed = () => {
         permalink: json.permalink,
         mediaUrl: json.media_url
       };
+
+      if(!!json.thumbnail_url) {
+        instaItem.thumbnailUrl = json.thumbnail_url;
+      }
 
       return instaItem;
     }
@@ -36,7 +41,6 @@ const InstaFeed = () => {
       }
       const res = await fetch(instaUrl);
       const json = (await res.json()).data;
-      console.log(json);
 
       const fetchedItems: InstaItem[] = [];
 
