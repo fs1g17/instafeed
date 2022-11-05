@@ -2,7 +2,7 @@ import React from 'react';
 
 import Skeleton from "@mui/material/Skeleton";
 
-import { InstaItem } from './InstaFeed';
+import { InstaItem } from '../../components';
 
 interface InstaGridProps {
   items: InstaItem[];

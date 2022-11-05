@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import InstaGrid from './InstaGrid';
+import {InstaGrid} from '../../components';
 
 export interface InstaItem {
   permalink: string;

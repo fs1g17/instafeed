@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import InstaFeed from './components/InstaFeed';
+import {InstaFeed} from './components';
 
 function App() {
   return (
