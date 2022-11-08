@@ -13,38 +13,26 @@ export interface InstaItem {
 const InstaFeed = () => {
   const [instaItems, setInstaItems] = useState<InstaItem[]>([]);
 
-  const instaUrl = "https://europe-west2-insta-query.cloudfunctions.net/test";
-
+  const instaUrl = "https://europe-west2-insta-query.cloudfunctions.net/test6";
   useEffect(() => {
-    const fetchMedia = async (id: string) => {
-      const mediaUrl = `https://europe-west2-insta-query.cloudfunctions.net/test2?id=${id}`;
-
-      const res = await fetch(mediaUrl);
-      const json = (await res.json());
-
-      const instaItem: InstaItem = {
-        permalink: json.permalink,
-        mediaUrl: json.media_url,
-        mediaType: json.media_type
-      };
-
-      if(!!json.thumbnail_url) {
-        instaItem.thumbnailUrl = json.thumbnail_url;
-      }
-
-      return instaItem;
-    }
     const doFetch = async () => {
       const res = await fetch(instaUrl);
-      const json = (await res.json()).data;
+      const json = await res.json();
 
       const fetchedItems: InstaItem[] = [];
-
       for(let i=0; i<json.length && i<9; i++) {
         const item = json[i];
-        const itemId = item.id;
+        
+        const instaItem: InstaItem = {
+          permalink: item.permalink,
+          mediaUrl: item.media_url,
+          mediaType: item.media_type,
+        }
 
-        const instaItem = await fetchMedia(itemId);
+        if(!!item.thumbnail_url) {
+          instaItem.thumbnailUrl = item.thumbnail_url
+        }
+
         fetchedItems.push(instaItem);
       }
 
@@ -60,3 +48,4 @@ const InstaFeed = () => {
 }
 
 export default InstaFeed;
+
