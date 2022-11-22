@@ -13,7 +13,7 @@ export interface InstaItem {
 const InstaFeed = () => {
   const [instaItems, setInstaItems] = useState<InstaItem[]>([]);
 
-  const instaUrl = "https://europe-west2-insta-query.cloudfunctions.net/test6";
+  const instaUrl = "http://localhost:9090";
   useEffect(() => {
     const doFetch = async () => {
       const res = await fetch(instaUrl);
