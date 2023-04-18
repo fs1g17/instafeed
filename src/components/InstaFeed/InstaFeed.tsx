@@ -13,9 +13,12 @@ export interface InstaItem {
 const InstaFeed = () => {
   const [instaItems, setInstaItems] = useState<InstaItem[]>([]);
 
-  const instaUrl = "http://localhost:9090";
+  const instaUrl = process.env.REACT_APP_INSTA_URL;
   useEffect(() => {
     const doFetch = async () => {
+      if(!instaUrl) {
+        return;
+      }
       const res = await fetch(instaUrl);
       const json = await res.json();
 
@@ -40,7 +43,7 @@ const InstaFeed = () => {
     }
 
     doFetch();
-  }, []);
+  }, [instaUrl]);
 
   return (
     <InstaGrid items={instaItems} />
